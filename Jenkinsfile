@@ -6,11 +6,17 @@ pipeline {
         sh 'dotnet build'
       }
     }
-     stage ('LIST OF TOOLS 1') {
-      steps {
-        sh 'dotnet tool list -g'
-      }
-    }
+     stage('Check and Install Entity Framework') {
+              steps {
+                  sh '''
+                      if ! dotnet tool list -g | grep -q "dotnet-ef"; then
+                          dotnet tool install --global dotnet-ef
+                      else
+                          echo "Entity Framework is already installed."
+                      fi
+                  '''
+              }
+          }
     stage ('LIST OF TOOLS') {
       steps {
         sh 'dotnet tool list -g'
