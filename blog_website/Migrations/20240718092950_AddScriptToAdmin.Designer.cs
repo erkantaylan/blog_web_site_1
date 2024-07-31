@@ -11,7 +11,7 @@ using blog_website.Data;
 
 namespace blog_website.Migrations
 {
-    [DbContext(typeof(ApplicationDbCon))]
+    [DbContext(typeof(BlogDbContext))]
     [Migration("20240718092950_AddScriptToAdmin")]
     partial class AddScriptToAdmin
     {

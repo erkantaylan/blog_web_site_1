@@ -10,7 +10,7 @@ using blog_website.Data;
 
 namespace blog_website.Migrations
 {
-    [DbContext(typeof(ApplicationDbCon))]
+    [DbContext(typeof(BlogDbContext))]
     partial class ApplicationDbConModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

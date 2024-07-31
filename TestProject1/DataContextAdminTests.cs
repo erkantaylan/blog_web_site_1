@@ -16,7 +16,7 @@ public class DataContextAdminTests : TestFixtureBase
     public async Task ShouldAddAdmin_Successfully()
     {
         //Arrange
-        var context = Scope.ServiceProvider.GetService<ApplicationDbCon>();
+        var context = Scope.ServiceProvider.GetService<BlogDbContext>();
 
         //Act
         EntityEntry<User> entity = await context.Users.AddAsync(new User

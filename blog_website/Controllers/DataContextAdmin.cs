@@ -11,8 +11,8 @@ namespace blog_website.Controllers
     
     public class DataContextAdmin : Controller
     {
-        private readonly ApplicationDbCon _db;
-        public DataContextAdmin(ApplicationDbCon db)
+        private readonly BlogDbContext _db;
+        public DataContextAdmin(BlogDbContext db)
         {
             _db = db;
         }

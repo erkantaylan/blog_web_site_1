@@ -10,7 +10,7 @@ using blog_website.Data;
 
 namespace blog_website.Migrations
 {
-    [DbContext(typeof(ApplicationDbCon))]
+    [DbContext(typeof(BlogDbContext))]
     [Migration("20240716111255_AddScriptToDatabase")]
     partial class AddScriptToDatabase
     {

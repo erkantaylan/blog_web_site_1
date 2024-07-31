@@ -28,8 +28,8 @@ public class BlogAppFactory : WebApplicationFactory<Program>, IAsyncLifetime
         builder.ConfigureTestServices(
             o =>
             {
-                o.Remove(o.Single(p => typeof(DbContextOptions<ApplicationDbCon>) == p.ServiceType));
-                o.AddDbContext<ApplicationDbCon>(
+                o.Remove(o.Single(p => typeof(DbContextOptions<BlogDbContext>) == p.ServiceType));
+                o.AddDbContext<BlogDbContext>(
                     optionsBuilder =>
                     {
                         optionsBuilder.EnableSensitiveDataLogging();

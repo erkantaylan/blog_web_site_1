@@ -23,18 +23,20 @@ public class Program
         if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
             // Configure the database context
-            builder.Services.AddDbContext<ApplicationDbCon>(options =>
+            builder.Services.AddDbContext<BlogDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("ConStr")));
         }
         else if(RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
         {
             // Configure the database context
-            builder.Services.AddDbContext<ApplicationDbCon>(options =>
+            builder.Services.AddDbContext<BlogDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("ConStrLinux")));
         }
         else{
             throw new Exception("there is no database config!!");
         }
+
+        builder.Services.AddMigration<BlogDbContext>();
 
         // Add authentication services
         builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -59,7 +61,7 @@ public class Program
         // Seed the database with initial data
         using (var scope = app.Services.CreateScope())
         {
-            var context = scope.ServiceProvider.GetRequiredService<ApplicationDbCon>();
+            var context = scope.ServiceProvider.GetRequiredService<BlogDbContext>();
             context.Database.Migrate();
         }
 

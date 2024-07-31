@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace blog_website.Data;
 
-public class ApplicationDbCon : DbContext
+public class BlogDbContext : DbContext
 {
-    public ApplicationDbCon(DbContextOptions<ApplicationDbCon> options) : base(options)
+    public BlogDbContext(DbContextOptions<BlogDbContext> options) : base(options)
     {
         Database.Migrate();
     }

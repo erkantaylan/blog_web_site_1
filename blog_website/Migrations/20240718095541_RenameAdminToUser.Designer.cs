@@ -11,7 +11,7 @@ using blog_website.Data;
 
 namespace blog_website.Migrations
 {
-    [DbContext(typeof(ApplicationDbCon))]
+    [DbContext(typeof(BlogDbContext))]
     [Migration("20240718095541_RenameAdminToUser")]
     partial class RenameAdminToUser
     {

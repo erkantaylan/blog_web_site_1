@@ -10,8 +10,8 @@ namespace blog_website.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ApplicationDbCon _db;
-        public HomeController(ApplicationDbCon db)
+        private readonly BlogDbContext _db;
+        public HomeController(BlogDbContext db)
         {
             _db = db;
         }
