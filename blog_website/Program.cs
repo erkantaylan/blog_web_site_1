@@ -1,5 +1,11 @@
-using blog_website.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using blog_website.Data;
+using myLib;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
+using System.Runtime.InteropServices;
 
 namespace blog_website;
 
@@ -7,33 +13,80 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+        var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+        // Add services to the container.
         builder.Services.AddControllersWithViews();
+        builder.Services.AddTransient<IMarkDown, MarkDown>();
 
-        builder.Services.AddDbContext<ApplicationDbCon>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConStr")));
-//builder.Services.AddDbContext<ApplicationDbCon>(opt => opt.UseInMemoryDatabase("AdminList"));
-        WebApplication app = builder.Build();
+        // Choose configuration accordingly OS
+        if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            // Configure the database context
+            builder.Services.AddDbContext<ApplicationDbCon>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("ConStr")));
+        }
+        else if(RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+        {
+            // Configure the database context
+            builder.Services.AddDbContext<ApplicationDbCon>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("ConStrLinux")));
+        }
+        else{
+            throw new Exception("there is no database config!!");
+        }
 
-// Configure the HTTP request pipeline.
+        // Add authentication services
+        builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
+            {
+                options.LoginPath = "/DataContextAdmin/Login";
+                options.LogoutPath = "/DataContextAdmin/Login";
+            });
+
+        builder.Services.AddDataProtection().UseCryptographicAlgorithms(
+            new AuthenticatedEncryptorConfiguration
+            {
+                EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
+                ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
+            });
+
+        // Add authorization services
+        builder.Services.AddAuthorization();
+
+        var app = builder.Build();
+
+        // Seed the database with initial data
+        using (var scope = app.Services.CreateScope())
+        {
+            var context = scope.ServiceProvider.GetRequiredService<ApplicationDbCon>();
+            context.Database.Migrate();
+        }
+
+        // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
         {
             app.UseExceptionHandler("/Home/Error");
-            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
         }
 
         app.UseHttpsRedirection();
         app.UseStaticFiles();
 
+        // If you use default files make sure you do it before markdown middleware
+        app.UseDefaultFiles(new DefaultFilesOptions()
+        {
+            DefaultFileNames = new List<string> { "index.md", "index.html" }
+        });
+
         app.UseRouting();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllerRoute(
-            "default",
-            "{controller=Home}/{action=Index}/{id?}");
+            name: "default",
+            pattern: "{controller=Home}/{action=Index}/{id?}");
 
         app.Run();
     }

@@ -18,5 +18,204 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #EDDDF1
+}
+
+.icon-container {
+    text-align: left;
+    margin-top: 20px;
+}
+
+.icon-container i {
+        font-size: 5rem; /* Adjust size as needed */
+    }
+
+.txtarea {
+    width: 600px;
+}
+
+.navitem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20px;
+    background-color: #EDDDF1;
+    border-radius: 10px;
+}
+
+/* site.css */
+
+/* Style for the scripts container */
+.scripts-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+/* Style for each script item */
+.script-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: 350px;
+    width: 350px;
+    position: relative;
+    background: linear-gradient(0deg, white, #b893c2)
+}
+.script-sub-item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Style for the script title */
+.script-title {
+    margin-bottom: 10px;
+    font-size: 2em;
+    color: #333;
+}
+
+.script-date {
+    font-size: 15px;
+    color: white;
+}
+
+
+.script-name {
+    font-size: 20px;
+    color: white;
+}
+
+/* Style for the script content */
+.script-substance {
+    font-size: 1em;
+    color: #666;
+    max-height: 50%; /* Adjust this value as needed */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    position: relative;
+}
+    .script-substance::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 50px; /* Height of the fade effect */
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
+    }
+    .script-substance img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+
+
+.read-more {
+    font-size: 0.9em;
+    color: #cfa0db;
+    cursor: pointer;
+    text-align: right;
+    margin-top: auto;
+    align-self: flex-end;
+    margin-right: 10px;
+}
+
+    .read-more:hover {
+        text-decoration: underline;
+        color: #a159b3;
+    }
+
+.welcome {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.scroll-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    column-gap: 100px;
+}
+
+.saveButton {
+    background-color: #cfa0db;
+    border: 1px solid #cfa0db;
+    border-radius: 10px;
+    margin-top: 10px;
+    box-shadow: 5px 5px 5px white;
+}
+    .saveButton:hover {
+        background-color: #a159b3;
+        border: 1px solid #a159b3;
+    }
+
+.buttonsContainer {
+    display: flex;
+    column-gap: 10px;
+}
+
+.btns-script {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    align-self: center;
+}
+
+.editBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 15px;
+    background-color: #EDDDF1;
+    border-radius: 5px;
+    padding: 6px;
+    margin-bottom: 5px;
+    text-decoration: none;
+}
+.editBtnText {
+    padding: 0;
+    color: black;
+    margin: 0;
+}
+
+.editBtnIcon {
+    color: black;
+    margin-right: 10px; /* Adjust margin between icon and text */
+}
+
+.titleNavbar {
+    color: #a159b3;
+    text-decoration: none;
+    font-size: 50px;
+    font-weight: bold;
+    font-family: Arial;
+}
+    .titleNavbar:hover {
+        color: #a159b3;
+    }
+
+.createBlogBtn {
+    display: inline-flex;
+    border: none;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #EDDDF1;
+    border-radius: 5px;
+    text-decoration: none;
+    padding-left: 5px;
+    padding-right: 5px;
 }

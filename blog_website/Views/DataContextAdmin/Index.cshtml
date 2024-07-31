@@ -1,7 +1,4 @@
-﻿@{
-    Layout = null;
-}
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,11 +8,37 @@
 </head>
 <body>
     <div class="container">
-        <div class="contact-form">
-            <h2>Register or Login</h2>
-            <a class="nav-link text-dark" asp-area="" asp-controller="DataContextAdmin" asp-action="Create">Register</a>
-            <a class="nav-link text-dark" asp-area="" asp-controller="DataContextAdmin" asp-action="Create">Login</a>
-        </div>
+        <h1>Register or Login</h1>
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <div class="buttonsContainer">
+                <form asp-controller="DataContextAdmin" asp-action="Create" method="post">
+                    <div class="form-group">
+                        <input type="submit" value="Register" class="btn btn-primary saveButton" />
+                    </div>
+                </form>
+                <form asp-controller="DataContextAdmin" asp-action="Login" method="post">
+                    <div class="form-group">
+                        <input type="submit" value="Login" class="btn btn-primary saveButton" />
+                    </div>
+                </form>
+            </div>
+        }
+
+        else
+        {
+            <form asp-controller="DataContextAdmin" asp-action="Logout" method="post">
+                <div class="form-group">
+                    <input type="submit" value="Logout" class="btn btn-primary saveButton" />
+                </div>
+            </form>
+        }
     </div>
+    <script>
+        document.querySelector('form').addEventListener('submit', function (event) {
+            console.log('Form submitted');
+        });
+    </script>
+
 </body>
 </html>

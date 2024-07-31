@@ -1,8 +1,54 @@
-﻿@{
+﻿@model IEnumerable<blog_website.Models.classes.Blog>
+@using Microsoft.AspNetCore.Identity
+@using myLib;
+
+@inject IMarkDown markDown
+
+@{
     ViewData["Title"] = "Home Page";
+    int currentUserId = ViewBag.CurrentUserId;
+
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h1 class="display-4 welcome">Welcome</h1>
+@if (Model.ToList().Count > 0)
+{
+    <div class="border">
+        <div class="scroll-container">
+            @foreach (var script in Model)
+            {
+                <div class="script-item">
+                    <h2 class="script-title">@script.Title</h2>
+                    <div class="script-sub-item">
+                        <h3 class="script-name">@script.User.Name</h3>
+                        <h3 class="script-date">@script.CreateDateTime</h3>
+                    </div>
+                    <!-- Render the sample Markdown content -->
+                    <div class="script-substance">
+                        @Html.Raw(markDown.ConvertToHtml(script.Substance))
+                        <div class="script-overlay"></div>
+                    </div>
+
+                    <!-- Render the Markdown content here -->
+
+                    <div class="btns-script">
+                        @if (currentUserId == script.UserId)
+                        {
+                            <a class="editBtn" asp-area="" asp-controller="Home" asp-action="Edit" asp-route-id="@script.Id">
+                                <i class="bi bi-pencil editBtnIcon"></i>
+                                <p class="editBtnText">Edit</p>
+                            </a>
+                            <a class="editBtn" asp-area="" asp-controller="Home" asp-action="Delete" asp-route-id="@script.Id">
+                                <i class="bi bi-trash editBtnIcon"></i>
+                                <p class="editBtnText">Delete</p>
+                            </a>
+                        }
+                        <a class="read-more" href="@Url.Action("Details", "Home", new { id = script.Id })" target="_blank">Read More</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+
