@@ -13,7 +13,7 @@ pipeline {
     }
     stage ('Run') {
       steps {
-        sh 'dotnet run'
+        sh 'dotnet run --project blog_website/blog_website.csproj'
       }
     }
   }
